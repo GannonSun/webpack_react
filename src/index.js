@@ -1,12 +1,12 @@
 import React from 'react';
 import ReactDom from 'react-dom';
-import Home from './home';
+import Router from './router';
 
 class App extends React.Component {
     render() {
         return (
             <div>
-                <Home />
+                <Router />
             </div>
         )
     }

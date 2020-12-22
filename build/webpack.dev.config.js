@@ -8,11 +8,7 @@ module.exports = webpackMerge.merge(baseWebpackConfig, {
     mode: "development",
     // 插件
     plugins: [
-        new HtmlWebpackPlugin({
-            filename: path.resolve(__dirname, "./../dist/index.html"), // html模版的生成路径
-            template: "public/index.html", // html模版
-            inject: true, // 默认值为true, script标签位于html文件的底部
-        })
+        
     ],
     // 开发环境本地启动的服务配置
     devServer: {

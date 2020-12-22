@@ -1,4 +1,6 @@
 const path = require('path');
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
     // 入口
@@ -67,5 +69,25 @@ module.exports = {
                 }
             }
         ]
-    }
+    },
+    plugins: [
+        new HtmlWebpackPlugin({
+            filename: path.resolve(__dirname, "./../dist/index.html"), // html模版的生成路径
+            template: "public/index.html", // html模版
+            templateParameters: {
+                appPrefix: "/"
+            },
+        }),
+        new CopyWebpackPlugin({
+            patterns: [
+                {
+                    from: path.resolve(__dirname, '../static'),
+                    to: 'static',
+                    globOptions: {
+                        ignore: ['.*']
+                    }
+                },
+            ]
+        }),
+    ],
 }

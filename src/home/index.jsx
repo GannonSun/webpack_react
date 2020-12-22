@@ -1,16 +1,13 @@
 import React from 'react';
+import { Button } from 'antd';
 
-import img1 from '@/assets/img/全球即时通讯.png';
-import './index.css';
-import './index.less';
-
-const Index = () => {
+const Home = () => {
     return (
-        <div className="css1 less1">
-            <p>hello world</p>
-            <img src={img1} alt="" style={{width: '50%'}} />
+        <div>
+            <Button type="primary">Home</Button>
+            <p>Home</p>
         </div>
     )
 }
 
-export default Index;
+export default Home;
