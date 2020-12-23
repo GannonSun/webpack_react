@@ -1,15 +1,13 @@
 const path = require("path");
-const webpackMerge = require("webpack-merge");
 const baseWebpackConfig = require("./webpack.base.config");
-const CleanWebpackPlugin = require("clean-webpack-plugin");
-const BundleAnalyzerPlugin = require("webpack-bundle-analyzer");
+const { merge } = require("webpack-merge");
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 
-module.exports = webpackMerge.merge(baseWebpackConfig, {
-    // 指定构建环境
-    mode: "production",
-    // 插件
-    plugins: [
-        new CleanWebpackPlugin.CleanWebpackPlugin(),
-        new BundleAnalyzerPlugin()
-    ],
-})
+module.exports = merge(baseWebpackConfig, {
+  // 指定构建环境
+  mode: "production",
+  // 插件
+  plugins: [
+    new CleanWebpackPlugin(), // 在打包的时候会删除之前的打包目录
+  ],
+});
