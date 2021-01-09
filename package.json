@@ -6,7 +6,6 @@
   "scripts": {
     "dev": "cross-env NODE_ENV=development webpack serve --inline --progress",
     "build": "cross-env NODE_ENV=production webpack --progress",
-    "build-hubei": "cross-env NODE_ENV=production PLACE=hubei webpack --progress",
     "analyz": "cross-env NODE_ENV=production BUILD_REPORT=true webpack --progress"
   },
   "keywords": [],
@@ -30,6 +29,7 @@
     "less": "^3.12.2",
     "less-loader": "^7.1.0",
     "style-loader": "^2.0.0",
+    "ts-loader": "^8.0.13",
     "url-loader": "^4.1.1",
     "webpack": "^5.10.0",
     "webpack-bundle-analyzer": "^4.2.0",

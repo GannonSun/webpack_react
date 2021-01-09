@@ -17,12 +17,10 @@ module.exports = webpackMerge.merge(baseWebpackConfig, {
     // host: ip, // 是否可以ip访问
     // disableHostCheck: true, // 是否可以ip访问
     historyApiFallback: {
-      index: isHubei
-        ? appConfig.absoluteHbPrefix
-        : appConfig.absolutePrefix + "index.html",
+      index: appConfig.absolutePrefix + "index.html",
     }, // 当找不到路径的时候，默认加载index.html
     open: true,
-    openPage: isHubei ? appConfig.relativeHbPrefix : appConfig.relativePrefix,
+    openPage: appConfig.relativePrefix,
     hot: true,
     contentBase: false, // 告诉服务器从哪里提供内容，只有在你想要提供静态文件时才需要
     compress: true, // 一切服务都启用gzip压缩

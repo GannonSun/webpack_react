@@ -5,24 +5,14 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 
 const isDev = process.env.NODE_ENV === "development";
-const isHubei = process.env.PLACE === "hubei";
 const publicPath = getPublicPath();
-const outputPath = isDev
-  ? ""
-  : isHubei
-  ? appConfig.relativeHbPrefix
-  : appConfig.relativePrefix;
+const outputPath = isDev ? "" : appConfig.relativePrefix;
 
 function getPublicPath() {
   if (appConfig.prodPublicPath === "./") {
     return "../";
   } else {
-    switch (process.env.PLACE) {
-      case "hubei":
-        return appConfig.absoluteHbPrefix;
-      default:
-        return appConfig.absolutePrefix;
-    }
+    return appConfig.absolutePrefix;
   }
 }
 
@@ -50,6 +40,11 @@ module.exports = {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/, // 屏蔽不需要处理的文件或者文件夹
         loader: "babel-loader", // loader名称
+      },
+      {
+        test: /\.(ts|tsx)$/,
+        exclude: /node_modules/, // 屏蔽不需要处理的文件或者文件夹
+        loader: "ts-loader", // loader名称
       },
       {
         test: /\.css$/,
@@ -100,7 +95,6 @@ module.exports = {
   plugins: [
     new webpack.DefinePlugin({
       "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV),
-      "process.env.PLACE": JSON.stringify(process.env.PLACE),
     }),
     new HtmlWebpackPlugin({
       filename: path.resolve(__dirname, "./../dist/index.html"), // html模版的生成路径

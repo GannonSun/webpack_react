@@ -3,8 +3,4 @@ module.exports = {
   prodPublicPath: "/",
   relativePrefix: "",
   absolutePrefix: "/",
-
-  // 定制部署 ex:湖北
-  relativeHbPrefix: "ell/",
-  absoluteHbPrefix: "/ell/",
 };
