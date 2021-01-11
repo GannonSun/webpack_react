@@ -36,6 +36,27 @@ const Index = () => {
           const result = window.location.href;
 
           // 正式环境start
+          const codeUrls = globalVal.codeUrl.split(";"); //array
+          for (let i = 0; i < codeUrls.length; i++) {
+            const index = result.indexOf(codeUrls[i]);
+            if (index !== 0) {
+              if (i === codeUrls.length - 1) {
+                setSpinning(false);
+                message.info("当前码格式非法\n" + result);
+              }
+              continue;
+            }
+            const newCode = result.split(codeUrls[i])[1];
+            const stuCardReg = /^[0-9]{18}$/;
+            if (stuCardReg.test(newCode)) {
+              getCodeInfo(newCode);
+            } else {
+              setSpinning(false);
+              message.info("溯源码格式非法，请重试");
+            }
+            break;
+          }
+
           // const index = result.indexOf(globalVal.codeUrl);
           // const newCode =
           //   result.split(globalVal.codeUrl)[1] &&
@@ -55,9 +76,9 @@ const Index = () => {
           // 正式环境end
 
           // 本地测试start
-          const index = result.lastIndexOf('/');
-          const newCode = result.slice(index + 1).trim();
-          getCodeInfo(newCode);
+          // const index = result.lastIndexOf('/');
+          // const newCode = result.slice(index + 1).trim();
+          // getCodeInfo(newCode);
           // 本地测试end
         } else {
           setSpinning(false);
@@ -152,17 +173,20 @@ const Index = () => {
                                     })}
                                 </Image.PreviewGroup>
                                 {/* {item.value &&
-                                                                    JSON.parse(item.value).map((val, index) => {
-                                                                        return (
-                                                                            <img
-                                                                                src={val}
-                                                                                alt=""
-                                                                                key={index}
-                                                                                onClick={() => handleClickImg(val)}
-                                                                                style={{ width: '100%', marginBottom: 10 }}
-                                                                            />
-                                                                        );
-                                                                    })} */}
+                                  JSON.parse(item.value).map((val, index) => {
+                                    return (
+                                      <img
+                                        src={val}
+                                        alt=""
+                                        key={index}
+                                        onClick={() => handleClickImg(val)}
+                                        style={{
+                                          width: "100%",
+                                          marginBottom: 10,
+                                        }}
+                                      />
+                                    );
+                                  })} */}
                               </div>
                             </div>
                           </Timeline.Item>
