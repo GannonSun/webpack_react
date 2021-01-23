@@ -42,11 +42,6 @@ module.exports = {
         loader: "babel-loader", // loader名称
       },
       {
-        test: /\.(ts|tsx)$/,
-        exclude: /node_modules/, // 屏蔽不需要处理的文件或者文件夹
-        loader: "ts-loader", // loader名称
-      },
-      {
         test: /\.css$/,
         use: [
           {
