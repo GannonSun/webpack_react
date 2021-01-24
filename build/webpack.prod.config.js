@@ -1,13 +1,14 @@
-const path = require("path");
-const baseWebpackConfig = require("./webpack.base.config");
+const common = require("./webpack.base.config.js");
 const { merge } = require("webpack-merge");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 
-module.exports = merge(baseWebpackConfig, {
-  // 指定构建环境
+module.exports = merge(common, {
   mode: "production",
-  // 插件
-  plugins: [
-    new CleanWebpackPlugin(), // 在打包的时候会删除之前的打包目录
-  ],
+  devtool: "source-map",
+  plugins: [new CleanWebpackPlugin()],
+  watchOptions: {
+    poll: 1000, // 轮询间隔时间
+    aggregateTimeout: 500, // 防抖（在输入时间停止刷新计时）
+    ignored: /node_modules/,
+  },
 });
