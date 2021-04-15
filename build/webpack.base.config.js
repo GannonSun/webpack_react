@@ -19,7 +19,7 @@ function getPublicPath() {
 module.exports = {
   // 入口
   entry: {
-    app: "./src/index",
+    app: ["react-hot-loader/patch", "./src/index"],
   },
   // 出口
   output: {

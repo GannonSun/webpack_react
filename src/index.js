@@ -1,15 +1,25 @@
-import React from 'react';
-import ReactDom from 'react-dom';
-import Router from './router';
+import React from "react";
+import ReactDom from "react-dom";
+import { AppContainer } from "react-hot-loader";
+import Layout from "./components/Layout";
+import Router from "./router";
 
-class App extends React.Component {
-    render() {
-        return (
-            <div>
-                <Router />
-            </div>
-        )
-    }
+function renderWithHotReload(RootElement) {
+  ReactDom.render(
+    <AppContainer>
+      <Layout>
+        <RootElement />
+      </Layout>
+    </AppContainer>,
+    document.getElementById("app")
+  );
 }
 
-ReactDom.render(<App />, document.getElementById("app"));
+renderWithHotReload(Router);
+
+if (module.hot) {
+  module.hot.accept("./router", () => {
+    const Router = require("./router").default;
+    renderWithHotReload(Router);
+  });
+}

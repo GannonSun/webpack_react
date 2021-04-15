@@ -13,6 +13,9 @@
   ],
   "plugins": [
     [
+      "react-hot-loader/babel"
+    ],
+    [
       "@babel/plugin-transform-runtime",
       {
         "corejs": 2, // polyfill 需要使用@babel/runtime-codejs2
