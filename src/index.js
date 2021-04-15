@@ -1,15 +1,12 @@
 import React from "react";
 import ReactDom from "react-dom";
 import { AppContainer } from "react-hot-loader";
-import Layout from "./components/Layout";
 import Router from "./router";
 
 function renderWithHotReload(RootElement) {
   ReactDom.render(
     <AppContainer>
-      <Layout>
-        <RootElement />
-      </Layout>
+      <RootElement />
     </AppContainer>,
     document.getElementById("app")
   );

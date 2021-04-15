@@ -1,12 +1,11 @@
 import React from "react";
-import { Switch, Route, BrowserRouter, Link } from "react-router-dom";
+import { Switch, Route, BrowserRouter, Link, Redirect } from "react-router-dom";
 import { Divider, Spin } from "antd";
+import Layout from "./components/Layout";
 import routerPath from "./router/routerPath";
 
 const HomeCompontent = React.lazy(() => import("./home"));
 const BlogCompontent = React.lazy(() => import("./blog"));
-
-console.log(routerPath);
 
 const AppRouter = () => {
   const diguiRouter = (routers) => {
@@ -36,11 +35,9 @@ const AppRouter = () => {
     );
   };
 
-  console.log(diguiRouter(routerPath));
-
   return (
-    <div>
-      <BrowserRouter>
+    <BrowserRouter>
+      <Layout>
         <ul>
           <li>
             <Link to="/home">home</Link>
@@ -62,10 +59,11 @@ const AppRouter = () => {
           </HomeCompontent>
           <Route path="/blog" component={BlogCompontent} /> */}
             {diguiRouter(routerPath)}
+            <Redirect to={routerPath[0].path} />
           </Switch>
         </React.Suspense>
-      </BrowserRouter>
-    </div>
+      </Layout>
+    </BrowserRouter>
   );
 };
 

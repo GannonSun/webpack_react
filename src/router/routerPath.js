@@ -5,14 +5,18 @@ const BlogCompontent = React.lazy(() => import("@/blog"));
 
 const path = [
   {
+    name: "home",
+    alias: "家",
     path: "/home",
     component: HomeCompontent,
     children: [
       {
+        alias: "首页博客",
         path: "/home/blog",
         component: BlogCompontent,
         children: [
           {
+            alias: "首页博客首页",
             path: "/home/blog/home",
             component: HomeCompontent,
           },
@@ -21,6 +25,8 @@ const path = [
     ],
   },
   {
+    name: "blog",
+    alias: "博客",
     path: "/blog",
     component: BlogCompontent,
   },
