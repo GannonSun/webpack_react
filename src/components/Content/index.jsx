@@ -6,7 +6,7 @@ const { Content } = Layout;
 
 const ContentCom = (props) => {
   return (
-    <Layout style={{ padding: "0 24px 24px" }}>
+    <Layout style={{ padding: "0 24px 24px", overflowY: 'auto' }}>
       <Breadcrumb style={{ margin: "16px 0" }}>
         <Breadcrumb.Item>Home</Breadcrumb.Item>
         <Breadcrumb.Item>List</Breadcrumb.Item>
@@ -18,6 +18,7 @@ const ContentCom = (props) => {
           padding: 24,
           margin: 0,
           minHeight: 280,
+          flexShrink: 0,
         }}
       >
         {props.children}

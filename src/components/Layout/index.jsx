@@ -19,7 +19,7 @@ const LayoutCom = (props) => {
   }, [authUtils.getSubMenu()]);
 
   return (
-    <Layout>
+    <Layout style={{ height: '100vh' }}>
       <Header routerPath={routerPath} />
       <Layout>
         <LeftMenu />
