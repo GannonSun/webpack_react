@@ -31,14 +31,14 @@ const HeaderCom = (props) => {
   return (
     <Header className="header">
       <div className="logo" />
-      <Menu
+      {/* <Menu
         theme="dark"
         mode="horizontal"
         defaultSelectedKeys={["/home"]}
         onClick={handleClickMenu}
       >
         {renderHeaderMenu()}
-      </Menu>
+      </Menu> */}
     </Header>
   );
 };

@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { Layout, Menu } from "antd";
-import {
-  UserOutlined,
-  LaptopOutlined,
-  NotificationOutlined,
-} from "@ant-design/icons";
+import { LaptopOutlined } from "@ant-design/icons";
 import authUtils from "@/utils/authUtils";
+import routerPath from "@/router/routerPath";
 import "./index.less";
 
 const { SubMenu } = Menu;
@@ -22,25 +20,33 @@ const LeftMenu = (props) => {
     console.log("menu", menu);
   }, [menu]);
 
-  const renderSubMenu = (router = menu) => {
+  const renderSubMenu = (router) => {
     return (
       router &&
       router.map((item) => {
         if (item.children && item.children.length) {
           return (
-            <SubMenu key={item.path} icon={<UserOutlined />} title={item.alias}>
+            <SubMenu
+              key={item.alias}
+              icon={<LaptopOutlined />}
+              title={item.alias}
+            >
               {renderSubMenu(item.children)}
             </SubMenu>
           );
         } else {
-          return <Menu.Item key={item.path}>{item.alias}</Menu.Item>;
+          return (
+            <Menu.Item key={item.alias}>
+              <Link to={item.path}>{item.alias}</Link>
+            </Menu.Item>
+          );
         }
       })
     );
   };
 
   const handleClickSubMenu = (e) => {
-    console.log(e);
+    props.clickSubMenu(e);
   };
 
   return (
@@ -53,7 +59,7 @@ const LeftMenu = (props) => {
         onClick={handleClickSubMenu}
         style={{ height: "100%", borderRight: 0 }}
       >
-        {renderSubMenu()}
+        {renderSubMenu(routerPath)}
       </Menu>
     </Sider>
   );

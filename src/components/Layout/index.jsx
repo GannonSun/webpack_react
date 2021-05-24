@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { withRouter } from "react-router-dom";
 import { Layout } from "antd";
 import routerPath from "@/router/routerPath";
 import authUtils from "@/utils/authUtils";
@@ -9,25 +8,24 @@ import Content from "../Content";
 import "./index.less";
 
 const LayoutCom = (props) => {
-  useEffect(() => {
-    // console.log(routerPath);
-    // console.log(props);
-  }, []);
+  const [breadInfo, setBreadInfo] = useState([
+    routerPath[0]?.alias ?? "",
+    routerPath[0]?.children[0]?.alias ?? "",
+  ]);
 
-  useEffect(() => {
-    console.log(1);
-  }, [authUtils.getSubMenu()]);
+  const clickSubMenu = (e) => {
+    setBreadInfo(e.keyPath.reverse());
+  };
 
   return (
     <Layout>
       <Header routerPath={routerPath} />
       <Layout>
-        <LeftMenu />
-        <Content {...props} />
+        <LeftMenu clickSubMenu={clickSubMenu} />
+        <Content {...props} breadInfo={breadInfo} />
       </Layout>
     </Layout>
   );
 };
 
-export default withRouter(LayoutCom);
-// export default LayoutCom;
+export default LayoutCom;
