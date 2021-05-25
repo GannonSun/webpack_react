@@ -1,16 +1,15 @@
 import React, { useEffect } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Layout, Menu } from "antd";
 import authUtils from "@/utils/authUtils";
 import "./index.less";
 
 const { Header } = Layout;
 
-const HeaderCom = (props) => {
-  useEffect(() => {}, []);
+const HeaderCom = ({ routerPath, handleSetLeftMenu }) => {
+  useEffect(() => { }, []);
 
   const renderHeaderMenu = () => {
-    const { routerPath } = props;
     return (
       routerPath &&
       routerPath.map((router) => {
@@ -24,8 +23,8 @@ const HeaderCom = (props) => {
   };
 
   const handleClickMenu = (e) => {
-    console.log(e);
     authUtils.setSubMenu(e.key);
+    handleSetLeftMenu(authUtils.getSubMenu());
   };
 
   return (
@@ -34,7 +33,7 @@ const HeaderCom = (props) => {
       <Menu
         theme="dark"
         mode="horizontal"
-        defaultSelectedKeys={["/home"]}
+        // defaultSelectedKeys={["/home"]}
         onClick={handleClickMenu}
       >
         {renderHeaderMenu()}

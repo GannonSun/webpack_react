@@ -9,20 +9,21 @@ import Content from "../Content";
 import "./index.less";
 
 const LayoutCom = (props) => {
+  const [leftMenu, setLeftMenu] = useState(authUtils.getSubMenu());
+
   useEffect(() => {
-    // console.log(routerPath);
-    // console.log(props);
+    // 初始化
   }, []);
 
   useEffect(() => {
-    console.log(1);
-  }, [authUtils.getSubMenu()]);
+    console.log(1)
+  }, [leftMenu]);
 
   return (
     <Layout style={{ height: '100vh' }}>
-      <Header routerPath={routerPath} />
+      <Header routerPath={routerPath} handleSetLeftMenu={(data) => setLeftMenu(data)} />
       <Layout>
-        <LeftMenu />
+        {leftMenu.length ? <LeftMenu leftMenu={leftMenu} /> : null}
         <Content {...props} />
       </Layout>
     </Layout>

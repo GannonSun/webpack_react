@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { Layout, Menu } from "antd";
 import {
   UserOutlined,
@@ -11,21 +12,13 @@ import "./index.less";
 const { SubMenu } = Menu;
 const { Sider } = Layout;
 
-const LeftMenu = (props) => {
-  const [menu, setMenu] = useState([]);
-  useEffect(() => {
-    authUtils.setSubMenu(window.location.pathname.split("/")[1]);
-    setMenu(authUtils.getSubMenu());
-  }, []);
+const LeftMenu = ({ leftMenu }) => {
+  const { openKeys, selectedKeys } = authUtils.getActiveMenu(leftMenu);
 
-  useEffect(() => {
-    console.log("menu", menu);
-  }, [menu]);
-
-  const renderSubMenu = (router = menu) => {
+  const renderSubMenu = (menu) => {
     return (
-      router &&
-      router.map((item) => {
+      menu &&
+      menu.map((item) => {
         if (item.children && item.children.length) {
           return (
             <SubMenu key={item.path} icon={<UserOutlined />} title={item.alias}>
@@ -33,13 +26,21 @@ const LeftMenu = (props) => {
             </SubMenu>
           );
         } else {
-          return <Menu.Item key={item.path}>{item.alias}</Menu.Item>;
+          return (
+            <Menu.Item key={item.path}>
+              <Link to={item.path}>{item.alias}</Link>
+            </Menu.Item>
+          );
         }
       })
     );
   };
 
-  const handleClickSubMenu = (e) => {
+  const handleOpenSubMenu = (keys) => {
+    console.log(keys);
+  }
+
+  const handleSelectSubMenu = (e) => {
     console.log(e);
   };
 
@@ -48,12 +49,13 @@ const LeftMenu = (props) => {
       <Menu
         mode="inline"
         theme="dark"
-        defaultSelectedKeys={["1"]}
-        defaultOpenKeys={["sub1"]}
-        onClick={handleClickSubMenu}
+        openKeys={openKeys}
+        selectedKeys={selectedKeys}
+        onOpenChange={handleOpenSubMenu}
+        onSelect={handleSelectSubMenu}
         style={{ height: "100%", borderRight: 0 }}
       >
-        {renderSubMenu()}
+        {renderSubMenu(leftMenu)}
       </Menu>
     </Sider>
   );
