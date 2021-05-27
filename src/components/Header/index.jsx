@@ -15,7 +15,8 @@ const HeaderCom = ({ routerPath, handleSetLeftMenu }) => {
       routerPath.map((router) => {
         return (
           <Menu.Item key={router.path}>
-            <Link to={router.path}>{router.alias}</Link>
+            {/* <Link to={router.path}>{router.alias}</Link> */}
+            <span>{router.alias}</span>
           </Menu.Item>
         );
       })
@@ -23,6 +24,7 @@ const HeaderCom = ({ routerPath, handleSetLeftMenu }) => {
   };
 
   const handleClickMenu = (e) => {
+    console.log(e)
     authUtils.setSubMenu(e.key);
     handleSetLeftMenu(authUtils.getSubMenu());
   };
@@ -33,7 +35,6 @@ const HeaderCom = ({ routerPath, handleSetLeftMenu }) => {
       <Menu
         theme="dark"
         mode="horizontal"
-        // defaultSelectedKeys={["/home"]}
         onClick={handleClickMenu}
       >
         {renderHeaderMenu()}

@@ -16,6 +16,29 @@ function getPublicPath() {
   }
 }
 
+// 未开启 css module 的 loader
+const cssLoader = [
+  {
+    loader: "style-loader",
+  },
+  {
+    loader: "css-loader",
+  },
+  {
+    loader: "less-loader", // 编译 less -> css
+  },
+];
+// 开启 css module 的 loader
+const cssModulesLoader = JSON.parse(JSON.stringify(cssLoader));
+cssModulesLoader[1] = {
+  loader: "css-loader",
+  options: {
+    modules: {
+      localIdentName: "[path][name]__[local]--[hash:base64:5]",
+    },
+  },
+};
+
 module.exports = {
   // 入口
   entry: {
@@ -54,15 +77,13 @@ module.exports = {
       },
       {
         test: /\.less$/,
-        use: [
+        oneOf: [
           {
-            loader: "style-loader",
+            resourceQuery: /css_modules/, // 只要匹配到了这个，就是用css modules，
+            use: cssModulesLoader.filter(Boolean),
           },
           {
-            loader: "css-loader",
-          },
-          {
-            loader: "less-loader", // 编译 less -> css
+            use: cssLoader.filter(Boolean),
           },
         ],
       },

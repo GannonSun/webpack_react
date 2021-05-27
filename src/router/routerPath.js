@@ -1,39 +1,57 @@
-import React from "react";
-
-const HomeCompontent = React.lazy(() => import("@/home"));
-const BlogCompontent = React.lazy(() => import("@/blog"));
-const NoFound = React.lazy(() => import("@/pages/404"));
-
 const path = [
   {
-    name: "home",
-    alias: "家",
-    path: "/home",
+    name: "frontEnd",
+    alias: "前端",
+    path: "/pages/frontEnd",
     children: [
       {
-        alias: "首页博客",
-        path: "/home/blog",
+        name: "iReact",
+        alias: "React",
+        path: "/pages/frontEnd/iReact",
         children: [
           {
-            alias: "首页博客首页",
-            path: "/home/blog/home",
-            component: HomeCompontent,
+            name: "classComponent",
+            alias: "类组件",
+            exact: true,
+            path: "/pages/frontEnd/iReact/classComponent",
+          },
+          {
+            name: "hooksComponent",
+            alias: "函数组件",
+            exact: true,
+            path: "/pages/frontEnd/iReact/hooksComponent",
           },
         ],
+      },
+      {
+        name: "iVue",
+        alias: "Vue",
+        exact: true,
+        path: "/pages/frontEnd/iVue",
       },
     ],
   },
   {
-    name: "blog",
-    alias: "博客",
-    path: "/blog",
-    component: BlogCompontent,
+    name: "backEnd",
+    alias: "后端",
+    path: "/pages/backEnd",
+    children: [
+      {
+        name: "iNode",
+        alias: "Node",
+        exact: true,
+        path: "/pages/backEnd/iNode",
+      },
+    ],
   },
   {
     name: "404",
     path: "/*",
-    component: NoFound,
   },
 ];
+
+export const routerConst = {
+  root: "/",
+};
 
 export default path;

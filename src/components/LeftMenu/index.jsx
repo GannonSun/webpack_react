@@ -14,6 +14,7 @@ const { Sider } = Layout;
 
 const LeftMenu = ({ leftMenu }) => {
   const { openKeys, selectedKeys } = authUtils.getActiveMenu(leftMenu);
+  console.log(openKeys)
 
   const renderSubMenu = (menu) => {
     return (
@@ -36,23 +37,13 @@ const LeftMenu = ({ leftMenu }) => {
     );
   };
 
-  const handleOpenSubMenu = (keys) => {
-    console.log(keys);
-  }
-
-  const handleSelectSubMenu = (e) => {
-    console.log(e);
-  };
-
   return (
     <Sider width={200} className="site-layout-background">
       <Menu
         mode="inline"
         theme="dark"
-        openKeys={openKeys}
-        selectedKeys={selectedKeys}
-        onOpenChange={handleOpenSubMenu}
-        onSelect={handleSelectSubMenu}
+        defaultOpenKeys={openKeys}
+        defaultSelectedKeys={selectedKeys}
         style={{ height: "100%", borderRight: 0 }}
       >
         {renderSubMenu(leftMenu)}

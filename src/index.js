@@ -1,7 +1,8 @@
 import React from "react";
 import ReactDom from "react-dom";
 import { AppContainer } from "react-hot-loader";
-import Router from "./router";
+import App from "./app";
+import "./index.less";
 
 function renderWithHotReload(RootElement) {
   ReactDom.render(
@@ -12,11 +13,11 @@ function renderWithHotReload(RootElement) {
   );
 }
 
-renderWithHotReload(Router);
+renderWithHotReload(App);
 
 if (module.hot) {
-  module.hot.accept("./router", () => {
-    const Router = require("./router").default;
+  module.hot.accept("./app", () => {
+    const Router = require("./app").default;
     renderWithHotReload(Router);
   });
 }
