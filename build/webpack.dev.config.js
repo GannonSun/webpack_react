@@ -10,6 +10,7 @@ const isHubei = process.env.PLACE === "hubei";
 module.exports = webpackMerge.merge(baseWebpackConfig, {
   // 指定构建环境
   mode: "development",
+  devtool: "eval-cheap-module-source-map",
   // 插件
   plugins: [],
   // 开发环境本地启动的服务配置

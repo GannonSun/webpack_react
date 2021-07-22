@@ -1,8 +1,9 @@
 import React from 'react';
+import Content from '@/components/Content';
 
 const BackEnd = (props) => {
     return (
-        <div>BackEnd</div>
+        <Content name="backEnd" />
     )
 }
 

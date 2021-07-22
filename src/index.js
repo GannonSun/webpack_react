@@ -1,13 +1,22 @@
 import React from "react";
 import ReactDom from "react-dom";
+
+// 热加载
 import { AppContainer } from "react-hot-loader";
+
+// mobx
+import { Provider } from "mobx-react";
+import store from "./store";
+
 import App from "./app";
 import "./index.less";
 
 function renderWithHotReload(RootElement) {
   ReactDom.render(
     <AppContainer>
-      <RootElement />
+      <Provider {...store}>
+        <RootElement />
+      </Provider>
     </AppContainer>,
     document.getElementById("app")
   );

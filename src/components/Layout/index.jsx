@@ -3,32 +3,23 @@ import { Switch, Route, Redirect, withRouter } from "react-router-dom";
 import { Layout } from "antd";
 import routerPath, { routerConst } from "@/router/routerPath";
 import authUtils from "@/utils/authUtils";
+import NoFound from "@/pages/404";
 import Header from "../Header";
 import LeftMenu from "../LeftMenu";
 import Content from "../Content";
 import "./index.less";
 
-const componentsMap = {
-  frontEnd: React.lazy(() => import('@/pages/frontEnd')),
-  backEnd: React.lazy(() => import('@/pages/backEnd')),
-  404: React.lazy(() => import('@/pages/404'))
-}
-
 const LayoutCom = (props) => {
   const [renderKey, setRenderKey] = useState(0);
   const [leftMenu, setLeftMenu] = useState(authUtils.getSubMenu());
 
-  const { dynamicRouter } = authUtils.getDynamicRouter();
+  const { newModules } = authUtils.getDynamicRouter();
 
   useEffect(() => {
     // 初始化
     authUtils.setDynamicRouter(routerPath);
     setRenderKey(renderKey + 1);
   }, []);
-
-  useEffect(() => {
-    // 窗外的天气
-  }, [leftMenu]);
 
   const getRootRedirect = (modules) => {
     if (modules[0].children) {
@@ -39,24 +30,25 @@ const LayoutCom = (props) => {
 
   return (
     <Layout style={{ height: '100vh' }}>
-      <Header routerPath={routerPath} handleSetLeftMenu={(data) => setLeftMenu(data)} />
+      <Header routerPath={newModules} handleSetLeftMenu={(data) => setLeftMenu(data)} />
       <Layout>
-        {/* {leftMenu.length ? <LeftMenu leftMenu={leftMenu} /> : null} */}
-        {/* <Content {...props} /> */}
-        {
-          dynamicRouter.length > 0 ? (
-            <Switch>
-              {routerConst.root === getRootRedirect(dynamicRouter) ? null : (
-                <Route
-                  exact
-                  path={routerConst.root}
-                  render={() => <Redirect to={getRootRedirect(dynamicRouter)}></Redirect>}
-                />
-              )}
-              {authUtils.renderRouter(dynamicRouter, componentsMap)}
-            </Switch>
-          ) : null
-        }
+        <Route render={({ location }) => (
+          location.state && location.state.is404 ?
+            <NoFound />
+            :
+            newModules.length > 0 ? (
+              <Switch>
+                {routerConst.root === getRootRedirect(newModules) ? null : (
+                  <Route
+                    exact
+                    path={routerConst.root}
+                    render={() => <Redirect to={getRootRedirect(newModules)}></Redirect>}
+                  />
+                )}
+                {authUtils.renderRouter(newModules, true)}
+              </Switch>
+            ) : null
+        )} />
       </Layout>
     </Layout>
   );

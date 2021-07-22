@@ -44,10 +44,10 @@ const path = [
       },
     ],
   },
-  {
-    name: "404",
-    path: "/*",
-  },
+  // {
+  //   name: "404",
+  //   path: "/*",
+  // },
 ];
 
 export const routerConst = {

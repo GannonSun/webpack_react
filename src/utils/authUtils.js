@@ -1,40 +1,70 @@
 import React from "react";
 import { Route, Redirect } from "react-router";
+import Loading from "@/components/Loading";
 import routerPath from "../router/routerPath";
 
 const authUtils = (() => {
-  let dynamicRouter = [];
+  let dynamicRouter = { newModules: [] };
 
   return {
     clearDynamicRouter: () => {
-      dynamicRouter.length = 0;
+      dynamicRouter.newModules.length = 0;
     },
 
     setDynamicRouter: (data) => {
       authUtils.clearDynamicRouter();
-      dynamicRouter = data;
+      if (data) {
+        for (let i in data) {
+          dynamicRouter.newModules.push(data[i]);
+        }
+      }
+    },
+
+    testSetDynamicRouter: () => {
+      authUtils.clearDynamicRouter();
+      if (routerPath) {
+        for (let i in routerPath) {
+          dynamicRouter.newModules.push(routerPath[i]);
+        }
+      }
     },
 
     getDynamicRouter: () => {
-      return {
-        dynamicRouter,
-      };
+      return dynamicRouter;
     },
 
-    renderRouter: (router, componentsMap) => {
+    renderRouter: (router, needNoFound = false) => {
       if (!(router && router.length)) return;
-      return router.map((item) => {
-        const RouteCom = componentsMap[`${item.name}`];
-        return (
+      const routers = router.map((item) => {
+        const RouteCom = React.lazy(() =>
+          import(`@/${item.path?.slice(1) ?? ""}`)
+        );
+        return needNoFound ? (
+          <Route
+            key={item.path}
+            exact={item.exact}
+            path={item.path}
+            component={RouteCom}
+            routes={item.children}
+          />
+        ) : (
           <RouteCom
             key={item.path}
             exact={item.exact}
             path={item.path}
-            component={componentsMap[item.name]}
             routes={item.children}
           />
         );
       });
+      const RedirectAs404 = ({ location }) => (
+        <Redirect
+          to={Object.assign({}, location, { state: { is404: true } })}
+        />
+      );
+      const arr = needNoFound
+        ? [<Route key="needNoFound" component={RedirectAs404} />]
+        : [];
+      return [...routers, ...arr];
     },
 
     getRootRedirectName: (modules) => {
@@ -69,12 +99,15 @@ const authUtils = (() => {
     },
 
     getLeftMenu: (name) => {
-      return dynamicRouter.find((item) => item.name === name)?.children ?? [];
+      return (
+        dynamicRouter.newModules.find((item) => item.name === name)?.children ??
+        []
+      );
     },
 
     getSubMenuItem: (name) => {
       let mod = { path: "", children: [] };
-      const res = dynamicRouter.find((item) => item.name === name);
+      const res = dynamicRouter.newModules.find((item) => item.name === name);
       if (res) {
         mod = {
           path: res.path,
@@ -105,14 +138,16 @@ const authUtils = (() => {
       const openKeys = [];
       const selectedKeys = [];
       if (activeMenuItem) {
-        openKeys.push(activeMenuItem.path);
         if (activeMenuItem.children) {
+          openKeys.push(activeMenuItem.path);
           const selectedMenuItem = activeMenuItem.children.find((item) =>
             window.location.pathname.includes(item.path)
           );
           if (selectedMenuItem) {
             selectedKeys.push(selectedMenuItem.path);
           }
+        } else {
+          selectedKeys.push(activeMenuItem.path);
         }
       }
       return {

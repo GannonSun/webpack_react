@@ -1,13 +1,14 @@
 import React from "react";
-import { Switch } from "react-router-dom";
-import { Layout, Breadcrumb } from "antd";
+import { Switch, Redirect, Route } from "react-router-dom";
+import { Layout } from "antd";
+import Breadcrumb from "../Breadcurmb";
 import authUtils from "@/utils/authUtils";
 import LeftMenu from "../LeftMenu";
 import "./index.less";
 
 const { Content } = Layout;
 
-const ContentCom = ({ name, componentsMap }) => {
+const ContentCom = ({ name }) => {
   const leftMenu = authUtils.getLeftMenu(name);
   const { path, children } = authUtils.getSubMenuItem(name);
 
@@ -15,11 +16,7 @@ const ContentCom = ({ name, componentsMap }) => {
     <>
       <LeftMenu leftMenu={leftMenu} />
       <Layout style={{ padding: "0 24px 24px", overflowY: 'auto' }}>
-        <Breadcrumb style={{ margin: "16px 0" }}>
-          <Breadcrumb.Item>Home</Breadcrumb.Item>
-          <Breadcrumb.Item>List</Breadcrumb.Item>
-          <Breadcrumb.Item>App</Breadcrumb.Item>
-        </Breadcrumb>
+        <Breadcrumb />
         <Content
           className="site-layout-background"
           style={{
@@ -30,7 +27,8 @@ const ContentCom = ({ name, componentsMap }) => {
           }}
         >
           <Switch>
-            {authUtils.renderRouter(children, componentsMap)}
+            {authUtils.renderRouter(children)}
+            <Redirect from={path} to={authUtils.getRootRedirect(children)} />
           </Switch>
         </Content>
       </Layout>
