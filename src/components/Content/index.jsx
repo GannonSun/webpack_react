@@ -3,6 +3,7 @@ import { Switch, Redirect, Route } from "react-router-dom";
 import { Layout } from "antd";
 import Breadcrumb from "../Breadcurmb";
 import authUtils from "@/utils/authUtils";
+import Loading from "@/components/Loading";
 import LeftMenu from "../LeftMenu";
 import "./index.less";
 
@@ -26,10 +27,12 @@ const ContentCom = ({ name }) => {
             flexShrink: 0,
           }}
         >
-          <Switch>
-            {authUtils.renderRouter(children)}
-            <Redirect from={path} to={authUtils.getRootRedirect(children)} />
-          </Switch>
+          <React.Suspense fallback={<Loading />}>
+            <Switch>
+              {authUtils.renderRouter(children)}
+              <Redirect from={path} to={authUtils.getRootRedirect(children)} />
+            </Switch>
+          </React.Suspense>
         </Content>
       </Layout>
     </>

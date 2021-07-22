@@ -3,10 +3,9 @@ import { Switch, Route, Redirect, withRouter } from "react-router-dom";
 import { Layout } from "antd";
 import routerPath, { routerConst } from "@/router/routerPath";
 import authUtils from "@/utils/authUtils";
+import Loading from "@/components/Loading";
 import NoFound from "@/pages/404";
 import Header from "../Header";
-import LeftMenu from "../LeftMenu";
-import Content from "../Content";
 import "./index.less";
 
 const LayoutCom = (props) => {
@@ -37,16 +36,18 @@ const LayoutCom = (props) => {
             <NoFound />
             :
             newModules.length > 0 ? (
-              <Switch>
-                {routerConst.root === getRootRedirect(newModules) ? null : (
-                  <Route
-                    exact
-                    path={routerConst.root}
-                    render={() => <Redirect to={getRootRedirect(newModules)}></Redirect>}
-                  />
-                )}
-                {authUtils.renderRouter(newModules, true)}
-              </Switch>
+              <React.Suspense fallback={null}>
+                <Switch>
+                  {routerConst.root === getRootRedirect(newModules) ? null : (
+                    <Route
+                      exact
+                      path={routerConst.root}
+                      render={() => <Redirect to={getRootRedirect(newModules)}></Redirect>}
+                    />
+                  )}
+                  {authUtils.renderRouter(newModules, true)}
+                </Switch>
+              </React.Suspense>
             ) : null
         )} />
       </Layout>

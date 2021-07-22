@@ -9,7 +9,7 @@ const { Header } = Layout;
 
 let activeMenu = null;
 
-const HeaderCom = ({ routerPath, handleSetLeftMenu, history, breadcrumb }) => {
+const HeaderCom = ({ routerPath, history, breadcrumb }) => {
   useEffect(() => {
     
   }, []);

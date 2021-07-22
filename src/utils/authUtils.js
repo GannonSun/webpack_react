@@ -1,6 +1,6 @@
 import React from "react";
 import { Route, Redirect } from "react-router";
-import Loading from "@/components/Loading";
+import { Switch } from "react-router-dom";
 import routerPath from "../router/routerPath";
 
 const authUtils = (() => {
